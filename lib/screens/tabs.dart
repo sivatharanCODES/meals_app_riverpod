@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meals_app_riverpod/providers/favorites_provider.dart';
+import 'package:meals_app_riverpod/providers/filters_provider.dart';
 import 'package:meals_app_riverpod/providers/meals_provider.dart';
 import 'package:meals_app_riverpod/screens/categories.dart';
 import 'package:meals_app_riverpod/screens/filters.dart';
@@ -39,9 +40,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       //
       final result = await Navigator.of(context).push<Map<Filter, bool>>(
         MaterialPageRoute(
-          builder: (ctx) => FiltersScreen(
-            currentFilters: _selectedFilters,
-          ),
+          builder: (ctx) => const FiltersScreen(),
         ),
       );
       setState(() {
@@ -53,20 +52,21 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     final meals = ref.watch(mealsProvider);
+    final activeFilters = ref.watch(filtersProvider);
     final availableMeals = meals.where((meal) {
-      if (_selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
+      if (activeFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
         return false;
       }
 
-      if (_selectedFilters[Filter.lactoseFree]! && !meal.isGlutenFree) {
+      if (activeFilters[Filter.lactoseFree]! && !meal.isGlutenFree) {
         return false;
       }
 
-      if (_selectedFilters[Filter.vegetarian]! && !meal.isVegetarian) {
+      if (activeFilters[Filter.vegetarian]! && !meal.isVegetarian) {
         return false;
       }
 
-      if (_selectedFilters[Filter.vegan]! && !meal.isVegan) {
+      if (activeFilters[Filter.vegan]! && !meal.isVegan) {
         return false;
       }
 
