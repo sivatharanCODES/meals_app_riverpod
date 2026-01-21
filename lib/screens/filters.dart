@@ -8,6 +8,7 @@ class FiltersScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final activeFilters = ref.watch(filtersProvider);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Filters'),
