@@ -13,9 +13,8 @@ class MealDetailsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final isFavorite = ref
-        .watch(favoriteMealsProvider)
-        .any((m) => m.id == meal.id);
+    final favoriteMeals = ref.watch(favoriteMealsProvider);
+    final isFavorite = favoriteMeals.contains(meal);
 
     return Scaffold(
       appBar: AppBar(
@@ -40,12 +39,7 @@ class MealDetailsScreen extends ConsumerWidget {
               );
             },
             // icon: const Icon(Icons.star),
-            icon: Icon(
-              Icons.star,
-              color: !isFavorite
-                  ? Theme.of(context).colorScheme.secondary
-                  : const Color.fromARGB(255, 255, 246, 124),
-            ),
+            icon: Icon(isFavorite ? Icons.star : Icons.star_outline),
           ),
         ],
       ),
